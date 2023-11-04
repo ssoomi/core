@@ -20,6 +20,12 @@
       state: directory
     delegate_to: localhost
 
+  - name: Create roles Folder
+    file:
+      path: "{{directory}}/{{ project }}/group_vars"
+      state: directory
+    delegate_to: localhost
+
   - name: Copy ansible.cfg
     copy:
       src: "{{ directory }}/ansible.cfg"

@@ -1,0 +1,69 @@
+---
+# playbook to setup folder structures for new project.
+
+- name: Create Ansible Project Directory Structure for New Project
+  hosts: localhost
+  vars:
+    directory: /home/eternia/core/
+
+  vars_prompt:
+
+    - name: project
+      prompt: Name of the Project/Customer?
+      private: no
+
+  tasks:
+    - name: Create project root directory
+      file:
+        path: "{{directory}}/{{ project }}/"
+        state: directory
+        mode: '0755'
+
+    - name: Create inventory directory
+      file:
+        path: "{{directory}}/{{ project }}/inventory"
+        state: directory
+        mode: '0755'
+
+    - name: Create playbooks directory
+      file:
+        path: "{{directory}}/{{ project }}/playbooks"
+        state: directory
+        mode: '0755'
+
+    - name: Create roles directory
+      file:
+        path: "{{directory}}/{{ project }}/roles"
+        state: directory
+        mode: '0755'
+
+    - name: Create group_vars directory
+      file:
+        path: "{{directory}}/{{ project }}/group_vars"
+        state: directory
+        mode: '0755'
+
+    - name: Create host_vars directory
+      file:
+        path: "{{directory}}/{{ project }}/host_vars"
+        state: directory
+        mode: '0755'
+
+    - name: Create files directory
+      file:
+        path: "{{directory}}/{{ project }}/files"
+        state: directory
+        mode: '0755'
+
+    - name: Copy ansible.cfg
+      copy:
+        src: "{{ directory }}/ansible.cfg"
+        dest: "{{ directory }}/{{ project }}/ansible.cfg"
+      delegate_to: localhost
+
+    - name: Copy inventory
+      copy:
+        src: "{{ directory }}/inventory"
+        dest: "{{ directory }}/{{ project }}/inventory/inventory"
+      delegate_to: localhost
+
